@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Singapore Property Market 2026</title>
+  <meta name="description" content="A mid-2026 snapshot of Singapore's residential property market: prices, sales, and rentals across private and HDB segments." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-band: #f6f8fc;
+      --bg-soft: #f1f5f9;
+      --ink: #0b1220;
+      --ink-2: #1e293b;
+      --muted: #64748b;
+      --muted-2: #94a3b8;
+      --line: #e2e8f0;
+      --line-strong: #cbd5e1;
+
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-300: #93c5fd;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-900: #1e3a8a;
+
+      --pos: #1d4ed8;
+      --neg: #64748b;
+
+      --radius: 14px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.03);
+      --shadow: 0 4px 14px rgba(15, 23, 42, 0.06), 0 2px 4px rgba(15, 23, 42, 0.04);
+      --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.08), 0 4px 8px rgba(15, 23, 42, 0.04);
+
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+      --max-w: 1120px;
+      --max-w-narrow: 760px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    img, svg, canvas { max-width: 100%; }
+    a { color: var(--blue-700); text-decoration: none; transition: color 0.15s ease; }
+    a:hover { color: var(--blue-900); text-decoration: underline; text-underline-offset: 3px; }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: 0;
+      background: var(--ink); color: #fff; padding: 8px 12px; border-radius: 6px;
+    }
+    .skip-link:focus { left: 12px; top: 12px; }
+
+    .wrap {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .site-header {
+      position: relative;
+      background:
+        radial-gradient(1200px 400px at 80% -10%, rgba(37, 99, 235, 0.10), transparent 60%),
+        radial-gradient(800px 300px at 10% 110%, rgba(37, 99, 235, 0.06), transparent 60%),
+        linear-gradient(180deg, #ffffff 0%, #f6f9ff 100%);
+      border-bottom: 1px solid var(--line);
+      padding: 96px 0 80px;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(37,99,235,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(37,99,235,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(800px 400px at 50% 30%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(800px 400px at 50% 30%, #000 30%, transparent 75%);
+      pointer-events: none;
+    }
+    .site-header .wrap { position: relative; }
+
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--blue-700); background: var(--blue-50);
+      padding: 6px 12px; border-radius: 999px; border: 1px solid var(--blue-100);
+    }
+    .eyebrow-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--blue-600); box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5.4vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      margin: 24px 0 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+    h1 .accent { color: var(--blue-700); }
+
+    .tagline {
+      font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+      color: var(--muted);
+      margin: 0 0 28px;
+      max-width: 640px;
+    }
+
+    .meta-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .badge {
+      display: inline-block;
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: var(--ink-2);
+      font-weight: 500;
+      box-shadow: var(--shadow-sm);
+    }
+    .meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--muted-2); }
+
+    .section { padding: 88px 0; }
+    .section--narrow .wrap { max-width: var(--max-w-narrow); }
+    .section--band { background: var(--bg-band); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    .section-head { margin-bottom: 40px; max-width: 760px; }
+    .section-label {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue-700);
+      margin-bottom: 14px;
+    }
+    h2 {
+      font-size: clamp(1.6rem, 2.8vw, 2.25rem);
+      line-height: 1.2; letter-spacing: -0.015em;
+      margin: 0 0 12px; font-weight: 700; color: var(--ink);
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--muted); margin: 0; max-width: 640px;
+    }
+
+    .lede {
+      font-size: clamp(1.1rem, 1.7vw, 1.3rem);
+      line-height: 1.65;
+      color: var(--ink-2);
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 26px 22px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      display: flex; flex-direction: column; gap: 10px;
+      min-height: 168px;
+    }
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--blue-300);
+      box-shadow: var(--shadow);
+    }
+    .stat-value {
+      font-size: clamp(2rem, 3.4vw, 2.6rem);
+      line-height: 1.05;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      display: flex; align-items: baseline; gap: 6px;
+    }
+    .stat-value--pos { color: var(--blue-700); }
+    .stat-value--neg { color: var(--ink-2); }
+    .stat-unit, .stat-range {
+      font-size: 0.95rem; font-weight: 500; color: var(--muted); letter-spacing: 0;
+    }
+    .stat-range { color: var(--ink); font-weight: 700; }
+    .stat-label {
+      font-size: 0.95rem; color: var(--ink-2);
+      line-height: 1.45;
+      flex: 1;
+    }
+    .stat-foot {
+      font-size: 0.78rem; color: var(--muted-2); letter-spacing: 0.01em;
+      padding-top: 10px; border-top: 1px solid var(--line);
+    }
+
+    .chart-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 28px 28px 22px;
+      box-shadow: var(--shadow);
+      margin: 0;
+    }
+    .chart-box {
+      position: relative;
+      width: 100%;
+      height: 380px;
+    }
+    .chart-card figcaption {
+      font-size: 0.85rem; color: var(--muted);
+      margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line);
+    }
+
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+    .narrative {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+    .narrative:hover { border-color: var(--blue-300); box-shadow: var(--shadow); }
+    .narrative h3 {
+      font-size: 1.15rem; margin: 0 0 12px;
+      color: var(--blue-700); letter-spacing: -0.005em;
+    }
+    .narrative p { margin: 0; color: var(--ink-2); font-size: 1rem; }
+
+    .yield-list {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+      max-width: 720px;
+    }
+    .yield-list li {
+      display: flex; justify-content: space-between; align-items: baseline;
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 18px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.18s ease;
+    }
+    .yield-list li:hover { border-color: var(--blue-300); }
+    .yield-place { font-weight: 600; color: var(--ink); }
+    .yield-range { font-weight: 700; color: var(--blue-700); font-variant-numeric: tabular-nums; }
+
+    .site-footer {
+      background: #0b1220;
+      color: #cbd5e1;
+      padding: 64px 0 32px;
+      margin-top: 24px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 40px;
+    }
+    .footer-title {
+      color: #fff; font-weight: 700; font-size: 1rem;
+      margin-bottom: 14px; letter-spacing: -0.005em;
+    }
+    .footer-note { color: #94a3b8; font-size: 0.92rem; max-width: 420px; margin: 0; }
+    .source-list { list-style: none; padding: 0; margin: 0; columns: 1; }
+    .source-list li { margin-bottom: 8px; font-size: 0.9rem; }
+    .source-list a { color: #cbd5e1; }
+    .source-list a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+      padding-top: 24px;
+      border-top: 1px solid #1e293b;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+
+    @media (max-width: 980px) {
+      .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .narrative-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      .yield-list { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .site-header { padding: 64px 0 56px; }
+      .section { padding: 64px 0; }
+      .chart-card { padding: 18px 14px 14px; }
+      .chart-box { height: 320px; }
+      .stat-card { padding: 22px 18px 18px; min-height: 0; }
+      .narrative { padding: 22px; }
+      .footer-bottom { flex-direction: column; gap: 8px; }
+    }
+    @media (max-width: 420px) {
+      .stat-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 2.2rem; }
+      .chart-box { height: 280px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#summary">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <div class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        Residential property report
+      </div>
+      <h1>Singapore Property Market <span class="accent">2026</span></h1>
+      <p class="tagline">A mid-year snapshot of prices, sales, and rentals across the private and HDB segments.</p>
+      <div class="meta-row">
+        <span class="badge">Data as of Q1 2026 / April 2026</span>
+        <span class="meta-dot" aria-hidden="true"></span>
+        <span class="meta-text">Compiled 18 May 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="summary" class="section section--narrow">
+      <div class="wrap">
+        <span class="section-label">Executive summary</span>
+        <p class="lede">
+          Singapore's residential market enters mid-2026 in a two-speed state. Private prices keep edging up &mdash; six straight quarters of gains, driven by suburban (OCR) launches &mdash; while the HDB resale market posted its first decline since 2019 as a wave of MOP supply arrives. Rental growth has cooled to the low single digits; gross yields remain in the 3&ndash;4% range.
+        </p>
+      </div>
+    </section>
+
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">At a glance</span>
+          <h2>Eight numbers that define the market</h2>
+        </div>
+
+        <div class="stat-grid">
+          <article class="stat-card">
+            <div class="stat-value stat-value--pos">+0.9%</div>
+            <div class="stat-label">Private residential price index, QoQ</div>
+            <div class="stat-foot">Q1 2026 &middot; URA (final)</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value">6<span class="stat-unit">quarters</span></div>
+            <div class="stat-label">Consecutive quarters of private price gains</div>
+            <div class="stat-foot">through Q1 2026 &middot; URA</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value stat-value--pos">+2.2%</div>
+            <div class="stat-label">OCR non-landed price growth &mdash; the suburban leader</div>
+            <div class="stat-foot">Q1 2026, QoQ &middot; URA</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value stat-value--neg">&minus;0.1%</div>
+            <div class="stat-label">HDB resale price index &mdash; first dip since 2019</div>
+            <div class="stat-foot">Q1 2026, QoQ &middot; HDB</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value">~13,500</div>
+            <div class="stat-label">HDB flats reaching MOP in 2026</div>
+            <div class="stat-foot">2026 &middot; Ministry of National Development</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value">1,548</div>
+            <div class="stat-label">New private home sales in April &mdash; a six-month high</div>
+            <div class="stat-foot">Apr 2026 &middot; URA / developer returns</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value">8,000<span class="stat-range">&ndash;</span>10,000</div>
+            <div class="stat-label">Forecast full-year new private home sales</div>
+            <div class="stat-foot">2026F &middot; Knight Frank / PropNex</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-value">~3.3%</div>
+            <div class="stat-label">Average gross rental yield, private condos</div>
+            <div class="stat-foot">2026 &middot; multiple consultancies</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">Chart 1</span>
+          <h2>The suburbs are doing the heavy lifting</h2>
+          <p class="section-sub">Outside Central Region prices rose 2.2% in Q1 2026, more than double the Rest of Central and Core Central regions. Landed homes were the only segment in the red.</p>
+        </div>
+        <figure class="chart-card">
+          <div class="chart-box"><canvas id="chart-regions" aria-label="Private price growth by region, Q1 2026" role="img"></canvas></div>
+          <figcaption>Quarter-on-quarter % change, Q1 2026. Source: URA.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">Chart 2</span>
+          <h2>Private and public housing diverge</h2>
+          <p class="section-sub">Q1 2026 marks the clearest split in years: private prices ticked up while HDB resale slipped for the first time since the second quarter of 2019.</p>
+        </div>
+        <figure class="chart-card">
+          <div class="chart-box"><canvas id="chart-divergence" aria-label="HDB vs Private QoQ change, Q1 2026" role="img"></canvas></div>
+          <figcaption>Quarter-on-quarter % change, Q1 2026. Sources: URA, HDB.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">Chart 3</span>
+          <h2>Supply and demand, roughly in balance</h2>
+          <p class="section-sub">Roughly 11,100 new private and EC units are queued to launch in 2026, against a forecast take-up midpoint of about 9,000 &mdash; a market that is well supplied but not glutted.</p>
+        </div>
+        <figure class="chart-card">
+          <div class="chart-box"><canvas id="chart-pipeline" aria-label="2026 launch pipeline vs forecast take-up" role="img"></canvas></div>
+          <figcaption>Units, full-year 2026 forecast. Sources: PropNex (pipeline), Knight Frank / PropNex (take-up).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section--band">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">Analysis</span>
+          <h2>What is going on, segment by segment</h2>
+        </div>
+
+        <div class="narrative-grid">
+          <article class="narrative">
+            <h3>Private market</h3>
+            <p>Q1 2026 was the sixth consecutive quarter of growth in the private residential price index, but the gain came overwhelmingly from the suburbs. OCR non-landed prices led with +2.2%, powered by mega-launches such as Tengah Garden Residences (855 of 863 units sold) and SingHaiyi's Vela Bay (370 of 515). The 6.2% vacancy rate across completed units is a reminder that the market is firm rather than tight.</p>
+          </article>
+
+          <article class="narrative">
+            <h3>HDB market</h3>
+            <p>The HDB resale price index slipped 0.1% in Q1 2026 to 203.4 &mdash; the first quarterly fall since 2019 &mdash; and prices fell a further 0.6% month-on-month in April. The driver is supply: roughly 13,500 flats hit their five-year MOP in 2026, almost double the 2025 cohort. Mature estates softened faster (&minus;1.4% in April) than non-mature ones (&minus;0.4%).</p>
+          </article>
+
+          <article class="narrative">
+            <h3>Rental and yield</h3>
+            <p>Private condo gross rental yields cluster around 3.0&ndash;4.5%, averaging about 3.3%. The strongest yielders are suburban: Jurong East (4.2&ndash;4.8%), Tampines and Woodlands (4.0&ndash;4.5%), and Pasir Ris (3.8&ndash;4.3%). Private rental growth is forecast at just +0.5% to +1.5% for 2026; HDB rents were up 3.2% year-on-year in January but slipping month-on-month.</p>
+          </article>
+
+          <article class="narrative">
+            <h3>Outlook</h3>
+            <p>Market consensus is for private home prices to rise about 3% over full-year 2026 &mdash; firm but moderating. The harder question is digestion: roughly 55,800 private units are scheduled to complete in the coming years, against new-sales forecasts in the 8,000&ndash;10,000 range. Expect the suburban-led, supply-aware pattern of Q1 to set the tone.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="section-label">Reference</span>
+          <h2>Top yielding suburban locations</h2>
+          <p class="section-sub">Gross rental yields for private condos. Source: aggregated consultancy estimates.</p>
+        </div>
+        <ul class="yield-list">
+          <li><span class="yield-place">Jurong East</span><span class="yield-range">4.2&ndash;4.8%</span></li>
+          <li><span class="yield-place">Tampines</span><span class="yield-range">4.0&ndash;4.5%</span></li>
+          <li><span class="yield-place">Woodlands</span><span class="yield-range">4.0&ndash;4.5%</span></li>
+          <li><span class="yield-place">Pasir Ris</span><span class="yield-range">3.8&ndash;4.3%</span></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">Singapore Property Market 2026</div>
+          <p class="footer-note">Data as of Q1 2026 / April 2026. Compiled 18 May 2026. Figures sourced from Singapore government bodies (URA, HDB) and major property consultancies.</p>
+        </div>
+        <div>
+          <div class="footer-title">Sources</div>
+          <ul class="source-list">
+            <li><a href="https://www.ura.gov.sg/Corporate/Media-Room/Media-Releases/pr26-31" rel="noopener">URA &mdash; Q1 2026 final price index</a></li>
+            <li><a href="https://www.ura.gov.sg/Corporate/Media-Room/Media-Releases/pr26-26" rel="noopener">URA &mdash; Q1 2026 flash estimate</a></li>
+            <li><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/1q2026-rpi" rel="noopener">HDB &mdash; 1Q 2026 public housing data</a></li>
+            <li><a href="https://www.hdb.gov.sg/hdb-pulse/news/2026/1q2026-flash-rpi" rel="noopener">HDB &mdash; 1Q 2026 flash RPI</a></li>
+            <li><a href="https://www.cbre.com.sg/insights/reports/2026-singapore-real-estate-market-outlook" rel="noopener">CBRE &mdash; 2026 Singapore outlook</a></li>
+            <li><a href="https://www.cushmanwakefield.com/en/singapore/insights/singapore-market-outlook" rel="noopener">Cushman &amp; Wakefield &mdash; Singapore outlook</a></li>
+            <li><a href="https://www.edgeprop.sg/property-news/hdb-resale-price-index-drops-01-q-o-q-1q2026-first-time-seven-years-hdb-flash-estimates" rel="noopener">EdgeProp &mdash; Q1 2026 HDB RPI flash</a></li>
+            <li><a href="https://www.mingtiandi.com/real-estate/research-policy/singapore-home-sales-hit-six-month-high-on-suburban-launches/" rel="noopener">Mingtiandi &mdash; April 2026 home sales</a></li>
+            <li><a href="https://realestateasia.com/residential/in-focus/singapore-private-home-prices-likely-rise-about-3-in-2026" rel="noopener">Real Estate Asia &mdash; 2026 price forecast</a></li>
+            <li><a href="https://stackedhomes.com/q1-2026-singapore-hdb-resale-price-analysis/" rel="noopener">Stacked Homes &mdash; Q1 2026 HDB analysis</a></li>
+            <li><a href="https://www.propertyguru.com.sg/property-guides/ura-private-property-prices-q1-2026-pjx-98370" rel="noopener">PropertyGuru &mdash; Q1 2026 URA analysis</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Singapore Property Market Report</span>
+        <span>This report is for informational purposes only and does not constitute investment advice.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script>
+    (function () {
+      if (typeof Chart === 'undefined') {
+        console.warn('Chart.js failed to load; charts will not render.');
+        return;
+      }
+
+      const C = {
+        blue700: '#1d4ed8',
+        blue600: '#2563eb',
+        blue500: '#3b82f6',
+        blue300: '#93c5fd',
+        blue100: '#dbeafe',
+        slate500: '#64748b',
+        slate400: '#94a3b8',
+        slate300: '#cbd5e1',
+        slate200: '#e2e8f0',
+        ink: '#0b1220',
+        muted: '#64748b',
+      };
+
+      Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif';
+      Chart.defaults.font.size = 13;
+      Chart.defaults.color = C.muted;
+      Chart.defaults.borderColor = C.slate200;
+
+      const tooltipStyle = {
+        backgroundColor: '#ffffff',
+        titleColor: C.ink,
+        bodyColor: C.ink,
+        borderColor: C.slate200,
+        borderWidth: 1,
+        padding: 12,
+        cornerRadius: 8,
+        displayColors: true,
+        boxPadding: 4,
+        titleFont: { weight: '600', size: 13 },
+        bodyFont: { size: 13 },
+      };
+
+      const gridStyle = { color: C.slate200, drawTicks: false };
+
+      const c1 = document.getElementById('chart-regions');
+      if (c1) {
+        const labels = ['OCR', 'RCR', 'CCR', 'Landed'];
+        const values = [2.2, 0.8, 0.6, -0.4];
+        new Chart(c1, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{
+              label: 'QoQ change',
+              data: values,
+              backgroundColor: values.map(v => v < 0 ? C.slate400 : C.blue600),
+              hoverBackgroundColor: values.map(v => v < 0 ? C.slate500 : C.blue700),
+              borderRadius: 6,
+              borderSkipped: false,
+              maxBarThickness: 96,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 8, right: 8, bottom: 0, left: 0 } },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                ...tooltipStyle,
+                callbacks: {
+                  title: (items) => regionLongName(items[0].label),
+                  label: (item) => `  ${formatPct(item.parsed.y)} quarter-on-quarter`,
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false, drawBorder: false },
+                ticks: { color: C.ink, font: { weight: '600' } },
+              },
+              y: {
+                grid: gridStyle,
+                border: { display: false },
+                ticks: {
+                  callback: (v) => `${v > 0 ? '+' : ''}${v}%`,
+                  color: C.muted,
+                },
+                suggestedMin: -1,
+                suggestedMax: 3,
+              }
+            }
+          }
+        });
+      }
+
+      function regionLongName(code) {
+        switch (code) {
+          case 'OCR': return 'Outside Central Region';
+          case 'RCR': return 'Rest of Central Region';
+          case 'CCR': return 'Core Central Region';
+          case 'Landed': return 'Landed homes';
+          default: return code;
+        }
+      }
+
+      const c2 = document.getElementById('chart-divergence');
+      if (c2) {
+        new Chart(c2, {
+          type: 'bar',
+          data: {
+            labels: ['Q1 2026'],
+            datasets: [
+              {
+                label: 'Private residential',
+                data: [0.9],
+                backgroundColor: C.blue600,
+                hoverBackgroundColor: C.blue700,
+                borderRadius: 6,
+                borderSkipped: false,
+                maxBarThickness: 72,
+              },
+              {
+                label: 'HDB resale',
+                data: [-0.1],
+                backgroundColor: C.slate400,
+                hoverBackgroundColor: C.slate500,
+                borderRadius: 6,
+                borderSkipped: false,
+                maxBarThickness: 72,
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 8 } },
+            plugins: {
+              legend: {
+                position: 'top',
+                align: 'start',
+                labels: {
+                  color: C.ink,
+                  boxWidth: 12,
+                  boxHeight: 12,
+                  padding: 18,
+                  usePointStyle: true,
+                  pointStyle: 'rectRounded',
+                }
+              },
+              tooltip: {
+                ...tooltipStyle,
+                callbacks: {
+                  label: (item) => `  ${item.dataset.label}: ${formatPct(item.parsed.y)}`,
+                }
+              }
+            },
+            scales: {
+              x: {
+                grid: { display: false, drawBorder: false },
+                ticks: { color: C.ink, font: { weight: '600' } },
+              },
+              y: {
+                grid: gridStyle,
+                border: { display: false },
+                ticks: {
+                  callback: (v) => `${v > 0 ? '+' : ''}${v}%`,
+                  color: C.muted,
+                },
+                suggestedMin: -0.5,
+                suggestedMax: 1.5,
+              }
+            }
+          }
+        });
+      }
+
+      const c3 = document.getElementById('chart-pipeline');
+      if (c3) {
+        new Chart(c3, {
+          type: 'doughnut',
+          data: {
+            labels: ['Private launch pipeline', 'EC launch pipeline', 'Forecast take-up (midpoint)'],
+            datasets: [{
+              data: [8800, 2300, 9000],
+              backgroundColor: [C.blue700, C.blue500, C.slate400],
+              hoverBackgroundColor: ['#1e3a8a', C.blue600, C.slate500],
+              borderColor: '#ffffff',
+              borderWidth: 3,
+              hoverOffset: 6,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '62%',
+            layout: { padding: 8 },
+            plugins: {
+              legend: {
+                position: 'right',
+                align: 'center',
+                labels: {
+                  color: C.ink,
+                  boxWidth: 12,
+                  boxHeight: 12,
+                  padding: 16,
+                  usePointStyle: true,
+                  pointStyle: 'rectRounded',
+                }
+              },
+              tooltip: {
+                ...tooltipStyle,
+                callbacks: {
+                  label: (item) => `  ${item.label}: ~${formatUnits(item.parsed)} units`,
+                }
+              }
+            }
+          }
+        });
+      }
+
+      function formatPct(v) {
+        const sign = v > 0 ? '+' : (v < 0 ? '−' : '');
+        return `${sign}${Math.abs(v).toFixed(1)}%`;
+      }
+
+      function formatUnits(n) {
+        return n.toLocaleString('en-US');
+      }
+    })();
+  </script>
+</body>
+</html>
