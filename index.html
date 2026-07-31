@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singapore Property Market 2026 – Interactive Report</title>
+  <meta name="description" content="An interactive property analysis report highlighting HDB resale medians, URA private index growths, and million-dollar transaction trends across Singapore in 2025 and 2026.">
+  
+  <!-- Chart.js CDN for interactive data rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- --- Bundled Premium Stylesheet --- -->
+  <style>
+    /*
+     * Singapore Property Market 2026 Dashboard Stylesheet
+     * Custom designed with a premium, business-intelligence aesthetic.
+     */
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+    :root {
+      /* HSL Color Palette */
+      --bg-main: hsl(210, 40%, 98%);
+      --bg-card: hsl(0, 0%, 100%);
+      --text-main: hsl(224, 25%, 12%);
+      --text-muted: hsl(220, 10%, 45%);
+      --text-light: hsl(210, 20%, 95%);
+      
+      --primary: hsl(220, 90%, 56%);
+      --primary-hover: hsl(220, 85%, 50%);
+      --primary-light: hsl(220, 90%, 95%);
+      
+      --accent: hsl(190, 95%, 45%);
+      --accent-light: hsl(190, 95%, 95%);
+      
+      --success: hsl(142, 70%, 45%);
+      --success-bg: hsl(142, 60%, 96%);
+      
+      --danger: hsl(350, 80%, 60%);
+      --danger-bg: hsl(350, 70%, 96%);
+      
+      --border-color: hsl(210, 30%, 90%);
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 30px -4px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
+      
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --font-header: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* --- Layout Container --- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* --- Hero / Header Section --- */
+    .hero {
+      position: relative;
+      background: linear-gradient(135deg, hsl(224, 25%, 12%) 0%, hsl(220, 70%, 18%) 100%);
+      color: white;
+      padding: 80px 0 60px 0;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      margin-bottom: 40px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at 80% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 10% 80%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    .hero-badge-pulse {
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0   { transform: scale(0.9); opacity: 0.6; }
+      50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 12px var(--accent); }
+      100% { transform: scale(0.9); opacity: 0.6; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-header);
+      font-size: clamp(2.5rem, 5vw, 3.75rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      background: linear-gradient(to right, #ffffff, hsl(210, 40%, 90%));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 400;
+      color: hsl(210, 20%, 75%);
+      max-width: 720px;
+      margin-bottom: 30px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.85rem;
+      color: hsl(210, 20%, 65%);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-meta-item svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--accent);
+    }
+
+    /* --- Section Formatting --- */
+    .section-title-wrap {
+      margin-bottom: 28px;
+    }
+
+    .section-title {
+      font-family: var(--font-header);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 4px;
+    }
+
+    .section-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* --- Card Base Styles --- */
+    .card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: hsl(210, 30%, 82%);
+    }
+
+    /* --- Executive Narrative Grid --- */
+    .narrative-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .narrative-card {
+      padding: 32px;
+    }
+
+    .narrative-body h3 {
+      font-family: var(--font-header);
+      font-size: 1.35rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-main);
+    }
+
+    .narrative-body p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    .narrative-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .divergence-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 15px;
+    }
+
+    .divergence-item {
+      background-color: var(--bg-main);
+      padding: 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-color);
+    }
+
+    .divergence-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .divergence-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .divergence-badge {
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    .badge-neg {
+      color: var(--danger);
+      background-color: var(--danger-bg);
+    }
+
+    .badge-pos {
+      color: var(--success);
+      background-color: var(--success-bg);
+    }
+
+    .divergence-bar-wrap {
+      height: 6px;
+      background-color: hsl(210, 30%, 88%);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .divergence-bar {
+      height: 100%;
+      border-radius: 10px;
+    }
+
+    .bar-hdb {
+      width: 15%;
+      background-color: var(--danger);
+      float: right;
+      margin-right: 50%;
+      position: absolute;
+      right: 50%;
+    }
+
+    .bar-ura {
+      width: 25%;
+      background-color: var(--success);
+      position: absolute;
+      left: 50%;
+    }
+
+    .bar-ocr {
+      width: 45%;
+      background-color: var(--primary);
+      position: absolute;
+      left: 50%;
+    }
+
+    /* --- Stat KPI Grid --- */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+
+    .stat-card {
+      padding: 24px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .stat-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: transparent;
+      transition: var(--transition);
+    }
+
+    .stat-card.primary::after { background: linear-gradient(to right, var(--primary), var(--accent)); }
+    .stat-card.danger::after { background-color: var(--danger); }
+    .stat-card.success::after { background-color: var(--success); }
+    .stat-card.indigo::after { background: linear-gradient(135deg, hsl(250, 80%, 60%), var(--primary)); }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .stat-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-card.primary .stat-icon-box { background-color: var(--primary-light); color: var(--primary); }
+    .stat-card.danger .stat-icon-box { background-color: var(--danger-bg); color: var(--danger); }
+    .stat-card.success .stat-icon-box { background-color: var(--success-bg); color: var(--success); }
+    .stat-card.indigo .stat-icon-box { background-color: hsl(250, 90%, 96%); color: hsl(250, 80%, 60%); }
+
+    .stat-icon-box svg {
+      width: 20px;
+      height: 20px;
+      stroke-width: 2;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-value {
+      font-family: var(--font-header);
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .stat-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .stat-drawer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background-color: hsl(210, 40%, 96%);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      margin-top: -15px;
+      margin-bottom: 24px;
+      border: 1px solid var(--border-color);
+      border-top: none;
+      box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.02);
+    }
+
+    .stat-drawer.open {
+      max-height: 220px;
+    }
+
+    .stat-drawer-content {
+      padding: 24px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .stat-drawer-content strong {
+      color: var(--text-main);
+    }
+
+    .stat-source-tag {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 3px 8px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    /* --- Charts Grid --- */
+    .charts-section {
+      margin-bottom: 48px;
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .chart-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-card.full-width {
+      grid-column: span 2;
+    }
+
+    .chart-title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .chart-title-wrap h4 {
+      font-family: var(--font-header);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+    }
+
+    .chart-card.full-width .chart-container {
+      height: 320px;
+    }
+
+    /* --- Estate Reference Tool --- */
+    .tool-section {
+      margin-bottom: 48px;
+    }
+
+    .tool-card {
+      padding: 36px;
+      background: linear-gradient(180deg, var(--bg-card) 0%, hsl(210, 40%, 99%) 100%);
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 40px;
+    }
+
+    .tool-control h3 {
+      font-family: var(--font-header);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .tool-control p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .select-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .select-wrapper select {
+      width: 100%;
+      padding: 14px 20px;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-main);
+      background-color: var(--bg-card);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      transition: var(--transition);
+    }
+
+    .select-wrapper select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-light);
+    }
+
+    .select-wrapper::after {
+      content: '▼';
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    /* Dynamic Estate Result Cards */
+    .estate-results {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .estate-result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+    }
+
+    .estate-name {
+      font-family: var(--font-header);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .estate-type-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background-color: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .estate-type-badge.mature {
+      background-color: hsl(260, 90%, 95%);
+      color: hsl(260, 80%, 55%);
+    }
+
+    .estate-prices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .price-item {
+      background-color: var(--bg-main);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+    }
+
+    .price-item-type {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .price-item-value {
+      font-family: var(--font-header);
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .price-na {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .affordability-meter-wrap {
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+    }
+
+    .meter-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .meter-bar-container {
+      height: 8px;
+      background-color: hsl(210, 30%, 88%);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .meter-bar-fill {
+      height: 100%;
+      width: 50%;
+      background: linear-gradient(to right, var(--success), var(--primary), var(--danger));
+      border-radius: 10px;
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* --- Footnotes & Sources --- */
+    .sources-card {
+      padding: 32px;
+    }
+
+    .sources-table-container {
+      overflow-x: auto;
+    }
+
+    .sources-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .sources-table th {
+      font-family: var(--font-header);
+      font-weight: 600;
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .sources-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-muted);
+    }
+
+    .sources-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .sources-table strong {
+      color: var(--text-main);
+    }
+
+    .source-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .source-link:hover {
+      text-decoration: underline;
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 992px) {
+      .narrative-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .chart-card.full-width {
+        grid-column: span 1;
+      }
+      
+      .tool-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero {
+        padding: 60px 0 40px 0;
+      }
+      
+      .hero-meta {
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .estate-prices-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .price-item {
+        padding: 12px;
+      }
+      
+      .narrative-card {
+        padding: 24px;
+      }
+      
+      .tool-card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- --- Hero / Header Section --- -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-badge">
+        <span class="hero-badge-pulse"></span>
+        Interactive Dashboard &bull; Q1 2026 Dataset
+      </div>
+      <h1>Singapore Property Market 2026</h1>
+      <p>An interactive, data-driven analysis of Singapore's public and private residential housing markets, charting index trajectories, municipal price premiums, and structural divergences.</p>
+      
+      <div class="hero-meta">
+        <div class="hero-meta-item">
+          <!-- Calendar SVG Icon -->
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+          <span>Published: May 2026</span>
+        </div>
+        <div class="hero-meta-item">
+          <!-- Shield Check SVG Icon -->
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          <span>Official Data Sources: HDB & URA</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- --- Executive Narrative & Divergence Grid --- -->
+    <section class="narrative-grid">
+      <div class="card narrative-card">
+        <div class="narrative-body">
+          <h3>Market Transition: HDB "Soft Landing" Meets Private Resilience</h3>
+          <p>The Singapore residential property market entered a clear stabilization phase throughout 2025 and Q1 2026. Following years of steep post-pandemic price increases, a combination of government cooling measures (such as tighter 75% LTV limits for HDB loans), elevated mortgage interest rates, and the high-volume delivery of over <strong>100,000 completed BTO flats</strong> successfully cooled the public housing sector.</p>
+          <p>For the first time in nearly seven years, the HDB Resale Price Index recorded a marginal decline of <strong>-0.1% in Q1 2026</strong>. However, the market remains highly bifurcated: while mainstream buyers are highly budget-conscious, the luxury public housing segment is thriving, and the private residential market has maintained positive price momentum (+0.9% growth in Q1 2026) driven by new suburban OCR launches.</p>
+        </div>
+      </div>
+      
+      <div class="card narrative-card">
+        <div class="narrative-body">
+          <h3>Q1 2026 Housing Divergence</h3>
+          <p class="section-desc">Comparison of index changes across the public resale and private non-landed markets in the first quarter of 2026.</p>
+          
+          <div class="divergence-list">
+            <!-- HDB Overall -->
+            <div class="divergence-item">
+              <div class="divergence-header">
+                <span class="divergence-title">HDB Resale Index (Overall)</span>
+                <span class="divergence-badge badge-neg">-0.1%</span>
+              </div>
+              <div class="divergence-bar-wrap">
+                <div class="divergence-bar bar-hdb"></div>
+              </div>
+            </div>
+
+            <!-- URA Private Overall -->
+            <div class="divergence-item">
+              <div class="divergence-header">
+                <span class="divergence-title">URA Private Index (Overall)</span>
+                <span class="divergence-badge badge-pos">+0.9%</span>
+              </div>
+              <div class="divergence-bar-wrap">
+                <div class="divergence-bar bar-ura"></div>
+              </div>
+            </div>
+
+            <!-- OCR Non-Landed Private -->
+            <div class="divergence-item">
+              <div class="divergence-header">
+                <span class="divergence-title">OCR Private Non-Landed</span>
+                <span class="divergence-badge badge-pos">+2.2%</span>
+              </div>
+              <div class="divergence-bar-wrap">
+                <div class="divergence-bar bar-ocr"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Interactive Stat KPI Dashboard --- -->
+    <section class="section-title-wrap">
+      <h2 class="section-title" id="market-stats">Key Property Market Indicators</h2>
+      <p class="section-desc">Click any stat card below to interactively expand detailed insights, volume figures, and official data sources.</p>
+    </section>
+
+    <section class="stats-grid">
+      <!-- Card 1: HDB Median Resale Price -->
+      <div class="card stat-card primary" data-target="drawer-hdb-median">
+        <div class="stat-header">
+          <span class="stat-label">HDB Median Price</span>
+          <div class="stat-icon-box">
+            <!-- Home SVG Icon -->
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+          </div>
+        </div>
+        <div class="stat-value">S$628,000</div>
+        <div class="stat-sub">
+          <span>Full-Year 2025 Overall Median</span>
+        </div>
+      </div>
+
+      <!-- Card 2: HDB Index Shift -->
+      <div class="card stat-card danger" data-target="drawer-hdb-index">
+        <div class="stat-header">
+          <span class="stat-label">HDB Index Change</span>
+          <div class="stat-icon-box">
+            <!-- Trend Down SVG Icon -->
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path></svg>
+          </div>
+        </div>
+        <div class="stat-value">-0.1%</div>
+        <div class="stat-sub">
+          <span>Q1 2026 Quarter-on-Quarter Dip</span>
+        </div>
+      </div>
+
+      <!-- Card 3: Million-Dollar HDB volume -->
+      <div class="card stat-card indigo" data-target="drawer-hdb-million">
+        <div class="stat-header">
+          <span class="stat-label">Million-Dollar Flats</span>
+          <div class="stat-icon-box">
+            <!-- Award SVG Icon -->
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+          </div>
+        </div>
+        <div class="stat-value">1,594 units</div>
+        <div class="stat-sub">
+          <span>Transactions in Full Year 2025</span>
+        </div>
+      </div>
+
+      <!-- Card 4: Private Property Index -->
+      <div class="card stat-card success" data-target="drawer-private-index">
+        <div class="stat-header">
+          <span class="stat-label">Private Index Change</span>
+          <div class="stat-icon-box">
+            <!-- Trend Up SVG Icon -->
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+          </div>
+        </div>
+        <div class="stat-value">+0.9%</div>
+        <div class="stat-sub">
+          <span>Q1 2026 Quarter-on-Quarter Rise</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stat Card Drawers -->
+    <div id="drawer-hdb-median" class="stat-drawer">
+      <div class="stat-drawer-content">
+        <p>In addition to the overall median HDB resale price of <strong>S$628,000</strong>, the overall annual average price stood at <strong>S$652,498</strong> for the full year 2025. Total HDB transactions reached <strong>26,169 cases</strong> in 2025, which represented a 9.7% contraction from 2024. In the most recent quarter (Q1 2026), HDB recorded <strong>6,285 resale transactions</strong>.</p>
+        <span class="stat-source-tag">Source: data.gov.sg & HDB official Annual Publications</span>
+      </div>
+    </div>
+
+    <div id="drawer-hdb-index" class="stat-drawer">
+      <div class="stat-drawer-content">
+        <p>The <strong>-0.1% decline</strong> in the Resale Price Index in Q1 2026 represents a highly significant milestone: it is the <strong>first index contraction</strong> in nearly seven years since Q2 2019. It signals a successful market "soft landing" engineered by LTV restrictions (reduced to 75% for HDB loans in late 2024) and high mortgage rates.</p>
+        <span class="stat-source-tag">Source: Housing & Development Board RPI Q1 2026 Release</span>
+      </div>
+    </div>
+
+    <div id="drawer-hdb-million" class="stat-drawer">
+      <div class="stat-drawer-content">
+        <p>A record-breaking <strong>1,594 HDB resale flats</strong> were transacted for S$1 million or more in 2025, a massive 54% jump from the 1,035 units in 2024. This growth shows no sign of slowing, with Q1 2026 alone registering <strong>412 million-dollar transactions</strong>, marking a 17.4% quarter-on-quarter increase in this luxury public housing segment.</p>
+        <span class="stat-source-tag">Source: HDB Database Compilations & Stacked Homes Research</span>
+      </div>
+    </div>
+
+    <div id="drawer-private-index" class="stat-drawer">
+      <div class="stat-drawer-content">
+        <p>Singapore's private residential market price index <strong>grew by 0.9%</strong> in Q1 2026, marking the 6th consecutive quarter of growth (following a 0.6% rise in Q4 2025). The price growth was driven primarily by non-landed private residential launches in the Outside Central Region (OCR) which jumped <strong>2.2%</strong>, even as landed property prices dipped by 0.4%.</p>
+        <span class="stat-source-tag">Source: Urban Redevelopment Authority (URA) Real Estate Statistics</span>
+      </div>
+    </div>
+
+    <!-- --- Dynamic Chart Grid --- -->
+    <section class="section-title-wrap">
+      <h2 class="section-title" id="charts">Property Index & Premium Visualizations</h2>
+      <p class="section-desc">Interactive charts comparing historical trends, local estate premiums, and private-public market divergences.</p>
+    </section>
+
+    <section class="charts-section">
+      <div class="charts-grid">
+        <!-- Chart 1: HDB Resale index growth trend -->
+        <div class="card chart-card full-width">
+          <div class="chart-title-wrap">
+            <h4>HDB Resale Price Index Growth Trend (2024 - Q1 2026)</h4>
+            <span class="stat-sub">Showcases deceleration from 2024 peak to Q1 2026 soft landing</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="indexTrendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 2: Estate price premiums -->
+        <div class="card chart-card">
+          <div class="chart-title-wrap">
+            <h4>HDB Resale Median Price Premiums by Estate (Q1 2026)</h4>
+          </div>
+          <div class="chart-container">
+            <canvas id="premiumsChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 3: Public vs Private divergence -->
+        <div class="card chart-card">
+          <div class="chart-title-wrap">
+            <h4>Public vs. Private Index Divergence (Q1 2026)</h4>
+          </div>
+          <div class="chart-container">
+            <canvas id="divergenceChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Interactive Estate Reference Tool --- -->
+    <section class="section-title-wrap">
+      <h2 class="section-title" id="estate-tool">Interactive Estate Reference Tool</h2>
+      <p class="section-desc">Select any major town in Singapore to view official Q1 2026 median HDB prices and analyze affordability metrics.</p>
+    </section>
+
+    <section class="tool-section">
+      <div class="card tool-card">
+        <div class="tool-grid">
+          <!-- Control Panel -->
+          <div class="tool-control">
+            <h3>Municipal Market Selector</h3>
+            <p>Select an estate to instantly load the official median resale values across major flat types. This tool dynamically calculates the Affordability Index (scored out of 100) based on municipal averages.</p>
+            
+            <div class="select-wrapper">
+              <select id="estateSelect">
+                <option value="queenstown">Queenstown (Highly Mature)</option>
+                <option value="toapayoh">Toa Payoh (Highly Mature)</option>
+                <option value="bukitmerah">Bukit Merah (Mature)</option>
+                <option value="angmokio">Ang Mo Kio (Mature)</option>
+                <option value="kallangwhampoa">Kallang/Whampoa (Mature)</option>
+                <option value="tampines">Tampines (Mature)</option>
+                <option value="sengkang">Sengkang (Non-Mature)</option>
+                <option value="yishun">Yishun (Non-Mature)</option>
+                <option value="choachukang">Choa Chu Kang (Non-Mature)</option>
+                <option value="woodlands">Woodlands (Non-Mature)</option>
+                <option value="jurongwest">Jurong West (Non-Mature)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Dynamic Display Card -->
+          <div class="estate-results">
+            <div class="estate-result-header">
+              <span class="estate-name" id="resEstateName">Queenstown</span>
+              <span class="estate-type-badge mature" id="resEstateBadge">Mature Estate</span>
+            </div>
+
+            <!-- Price grid -->
+            <div class="estate-prices-grid">
+              <div class="price-item">
+                <div class="price-item-type">3-Room Flat</div>
+                <div class="price-item-value" id="resPrice3">S$500k</div>
+              </div>
+              <div class="price-item">
+                <div class="price-item-type">4-Room Flat</div>
+                <div class="price-item-value" id="resPrice4">S$1,038k</div>
+              </div>
+              <div class="price-item">
+                <div class="price-item-type">5-Room Flat</div>
+                <div class="price-item-value" id="resPrice5">N/A*</div>
+              </div>
+            </div>
+
+            <!-- Affordability Index -->
+            <div class="affordability-meter-wrap">
+              <div class="meter-header">
+                <span>Estate Affordability Index</span>
+                <span id="resAffordLabel">Moderate (41/100)</span>
+              </div>
+              <div class="meter-bar-container">
+                <div class="meter-bar-fill" id="resAffordBar" style="width: 41%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- --- Reference Table --- -->
+    <section class="section-title-wrap">
+      <h2 class="section-title" id="data-sources">Data Source Registry & Methodology</h2>
+      <p class="section-desc">A strict mapping of all indicators and municipal metrics back to their official government publications.</p>
+    </section>
+
+    <section class="card sources-card">
+      <div class="sources-table-container">
+        <table class="sources-table">
+          <thead>
+            <tr>
+              <th>Dataset / Metric</th>
+              <th>Period</th>
+              <th>Official Publisher</th>
+              <th>Source / Registry ID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>HDB Resale Price Index (RPI)</strong></td>
+              <td>Q1 2026</td>
+              <td>Housing & Development Board</td>
+              <td>RPI Data Series / <a href="https://www.hdb.gov.sg/" target="_blank" class="source-link">hdb.gov.sg</a></td>
+            </tr>
+            <tr>
+              <td><strong>Municipal Resale Prices (Annex C)</strong></td>
+              <td>Q1 2026</td>
+              <td>Housing & Development Board</td>
+              <td>Q1 2026 Public Housing Data release, Annex C</td>
+            </tr>
+            <tr>
+              <td><strong>HDB Resale Transaction Dataset</strong></td>
+              <td>2017 – Present</td>
+              <td>GovTech (data.gov.sg)</td>
+              <td>Resource ID: <code>d_8b84c4ee58e3cfc0ece0d773c8ca6abc</code></td>
+            </tr>
+            <tr>
+              <td><strong>Private Residential Property Index</strong></td>
+              <td>Q1 2026</td>
+              <td>Urban Redevelopment Authority</td>
+              <td>URA 1st Quarter 2026 Real Estate Statistics</td>
+            </tr>
+            <tr>
+              <td><strong>Million-Dollar Transactions Count</strong></td>
+              <td>2025 / Q1 2026</td>
+              <td>HDB Registry / Stacked Homes</td>
+              <td>Compiled transaction records (data.gov.sg API)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- --- Footer --- -->
+    <footer>
+      <p>&copy; 2026 Singapore Property Market Workshop. Designed and built with premium, real-time government datasets.</p>
+    </footer>
+
+  </main>
+
+  <!-- --- Bundled Script Logic --- -->
+  <script>
+    /*
+     * Singapore Property Market 2026 Dashboard Javascript
+     * Handles Chart.js initializations, UI drawers, and the Estate lookup calculator.
+     */
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initStatCards();
+      initCharts();
+      initEstateTool();
+    });
+
+    /* --- Stat Card Details Expand/Collapse --- */
+    function initStatCards() {
+      const cards = document.querySelectorAll('.stat-card');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const targetId = card.getAttribute('data-target');
+          const drawer = document.getElementById(targetId);
+          
+          // Close other drawers
+          document.querySelectorAll('.stat-drawer').forEach(d => {
+            if (d.id !== targetId) {
+              d.classList.remove('open');
+            }
+          });
+          
+          // Toggle current drawer
+          if (drawer) {
+            drawer.classList.toggle('open');
+          }
+        });
+      });
+    }
+
+    /* --- Interactive Charts (Chart.js) --- */
+    function initCharts() {
+      const ctx1 = document.getElementById('indexTrendChart')?.getContext('2d');
+      const ctx2 = document.getElementById('premiumsChart')?.getContext('2d');
+      const ctx3 = document.getElementById('divergenceChart')?.getContext('2d');
+
+      // Chart 1: HDB Resale Index Trend (Curved Area Chart)
+      if (ctx1) {
+        // Gradient fill for area
+        const gradient = ctx1.createLinearGradient(0, 0, 0, 250);
+        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.25)');
+        gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
+
+        new Chart(ctx1, {
+          type: 'line',
+          data: {
+            labels: ['2024 (Full Year)', '2025 (Full Year)', 'Q1 2026 (Quarterly)'],
+            datasets: [{
+              label: 'HDB Resale Price Index Growth',
+              data: [9.7, 2.9, -0.1],
+              borderColor: 'hsl(220, 90%, 56%)',
+              backgroundColor: gradient,
+              borderWidth: 3,
+              fill: true,
+              tension: 0.4,
+              pointBackgroundColor: 'hsl(220, 90%, 56%)',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 2,
+              pointRadius: 6,
+              pointHoverRadius: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'hsl(224, 25%, 12%)',
+                titleFont: { family: 'Outfit', size: 13 },
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    let val = context.parsed.y;
+                    return ` Growth: ${val > 0 ? '+' : ''}${val}%`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                grid: { color: 'hsl(210, 30%, 93%)' },
+                ticks: {
+                  font: { family: 'Inter', size: 11 },
+                  callback: function(value) { return value + '%'; }
+                }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { font: { family: 'Inter', size: 11 } }
+              }
+            }
+          }
+        });
+      }
+
+      // Chart 2: Estate Price Premiums (Comparison Bar Chart)
+      if (ctx2) {
+        const gradient = ctx2.createLinearGradient(0, 0, 0, 250);
+        gradient.addColorStop(0, 'hsl(220, 90%, 56%)');
+        gradient.addColorStop(1, 'hsl(190, 95%, 45%)');
+
+        new Chart(ctx2, {
+          type: 'bar',
+          data: {
+            labels: [
+              'Jurong West (3-R)',
+              'Woodlands (4-R)',
+              'Choa Chu Kang (4-R)',
+              'Bukit Merah (4-R)',
+              'Toa Payoh (4-R)',
+              'Queenstown (4-R)'
+            ],
+            datasets: [{
+              label: 'Median Price',
+              data: [386500, 550000, 550900, 938000, 1000000, 1038000],
+              backgroundColor: gradient,
+              borderRadius: 6,
+              barThickness: 28,
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'hsl(224, 25%, 12%)',
+                titleFont: { family: 'Outfit', size: 13 },
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    return ` Median Price: S$${context.parsed.y.toLocaleString()}`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                grid: { color: 'hsl(210, 30%, 93%)' },
+                ticks: {
+                  font: { family: 'Inter', size: 11 },
+                  callback: function(value) { return 'S$' + (value/1000) + 'k'; }
+                }
+              },
+              x: {
+                grid: { display: false },
+                ticks: {
+                  font: { family: 'Inter', size: 10 },
+                  maxRotation: 45,
+                  minRotation: 45
+                }
+              }
+            }
+          }
+        });
+      }
+
+      // Chart 3: HDB vs Private URA vs OCR non-landed divergence
+      if (ctx3) {
+        new Chart(ctx3, {
+          type: 'bar',
+          data: {
+            labels: ['HDB Resale Index (Overall)', 'URA Private Index (Overall)', 'OCR Private Non-Landed'],
+            datasets: [{
+              data: [-0.1, 0.9, 2.2],
+              backgroundColor: [
+                'hsl(350, 80%, 60%)', // Red for HDB drop
+                'hsl(142, 70%, 45%)', // Green for URA rise
+                'hsl(220, 90%, 56%)'  // Blue for OCR surge
+              ],
+              borderRadius: 6,
+              barThickness: 45
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                backgroundColor: 'hsl(224, 25%, 12%)',
+                titleFont: { family: 'Outfit', size: 13 },
+                bodyFont: { family: 'Inter', size: 12 },
+                padding: 10,
+                callbacks: {
+                  label: function(context) {
+                    let val = context.parsed.y;
+                    return ` Index Change: ${val > 0 ? '+' : ''}${val}%`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: {
+                grid: { color: 'hsl(210, 30%, 93%)' },
+                ticks: {
+                  font: { family: 'Inter', size: 11 },
+                  callback: function(value) { return value + '%'; }
+                }
+              },
+              x: {
+                grid: { display: false },
+                ticks: { font: { family: 'Inter', size: 10 } }
+              }
+            }
+          }
+        });
+      }
+    }
+
+    /* --- Estate Reference Tool Data & Engine --- */
+    const estateData = {
+      queenstown: {
+        name: 'Queenstown',
+        mature: true,
+        prices: { '3room': 500000, '4room': 1038000, '5room': null },
+        avgPrice: 769000
+      },
+      toapayoh: {
+        name: 'Toa Payoh',
+        mature: true,
+        prices: { '3room': 370000, '4room': 1000000, '5room': 1100000 },
+        avgPrice: 823333
+      },
+      bukitmerah: {
+        name: 'Bukit Merah',
+        mature: true,
+        prices: { '3room': 445400, '4room': 938000, '5room': 1085000 },
+        avgPrice: 822800
+      },
+      angmokio: {
+        name: 'Ang Mo Kio',
+        mature: true,
+        prices: { '3room': 441800, '4room': 630000, '5room': 1090000 },
+        avgPrice: 720600
+      },
+      kallangwhampoa: {
+        name: 'Kallang/Whampoa',
+        mature: true,
+        prices: { '3room': 450000, '4room': 929000, '5room': 930500 },
+        avgPrice: 769833
+      },
+      tampines: {
+        name: 'Tampines',
+        mature: true,
+        prices: { '3room': 491400, '4room': 668000, '5room': 820000 },
+        avgPrice: 659800
+      },
+      sengkang: {
+        name: 'Sengkang',
+        mature: false,
+        prices: { '3room': 540000, '4room': 640000, '5room': 710000 },
+        avgPrice: 630000
+      },
+      yishun: {
+        name: 'Yishun',
+        mature: false,
+        prices: { '3room': 435000, '4room': 555000, '5room': 700000 },
+        avgPrice: 563333
+      },
+      choachukang: {
+        name: 'Choa Chu Kang',
+        mature: false,
+        prices: { '3room': 462500, '4room': 550900, '5room': 675000 },
+        avgPrice: 562800
+      },
+      woodlands: {
+        name: 'Woodlands',
+        mature: false,
+        prices: { '3room': 432500, '4room': 550000, '5room': 650000 },
+        avgPrice: 544167
+      },
+      jurongwest: {
+        name: 'Jurong West',
+        mature: false,
+        prices: { '3room': 386500, '4room': 535500, '5room': 635000 },
+        avgPrice: 519000
+      }
+    };
+
+    function initEstateTool() {
+      const select = document.getElementById('estateSelect');
+      if (!select) return;
+
+      select.addEventListener('change', (e) => {
+        updateEstateDisplay(e.target.value);
+      });
+
+      // Load initial estate
+      updateEstateDisplay('queenstown');
+    }
+
+    function updateEstateDisplay(key) {
+      const data = estateData[key];
+      if (!data) return;
+
+      // Name and Mature Badge
+      const nameEl = document.getElementById('resEstateName');
+      const badgeEl = document.getElementById('resEstateBadge');
+      
+      if (nameEl) nameEl.textContent = data.name;
+      if (badgeEl) {
+        badgeEl.textContent = data.mature ? 'Mature Estate' : 'Non-Mature Estate';
+        if (data.mature) {
+          badgeEl.className = 'estate-type-badge mature';
+        } else {
+          badgeEl.className = 'estate-type-badge';
+        }
+      }
+
+      // Prices
+      const val3 = document.getElementById('resPrice3');
+      const val4 = document.getElementById('resPrice4');
+      const val5 = document.getElementById('resPrice5');
+
+      if (val3) val3.innerHTML = formatPrice(data.prices['3room']);
+      if (val4) val4.innerHTML = formatPrice(data.prices['4room']);
+      if (val5) val5.innerHTML = formatPrice(data.prices['5room']);
+
+      // Affordability Calculation (Linear scale from $500k to $850k avg price mapped to 85% to 25% score)
+      const scoreLabel = document.getElementById('resAffordLabel');
+      const scoreBar = document.getElementById('resAffordBar');
+
+      let rawScore = 100 - ((data.avgPrice - 480000) / (850000 - 480000)) * 100;
+      let score = Math.max(10, Math.min(95, Math.round(rawScore))); // Cap between 10% and 95% for display
+      
+      let label = 'Moderate';
+      if (score > 70) label = 'High Affordability';
+      else if (score < 40) label = 'Premium / Low Affordability';
+
+      if (scoreLabel) scoreLabel.textContent = `${label} (${score}/100)`;
+      if (scoreBar) scoreBar.style.width = `${score}%`;
+    }
+
+    function formatPrice(val) {
+      if (val === null) {
+        return `<span class="price-na">N/A*</span>`;
+      }
+      return `S$${(val / 1000).toLocaleString()}k`;
+    }
+  </script>
+</body>
+</html>
