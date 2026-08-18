@@ -1,0 +1,78 @@
+{
+  "name": "leak_detection",
+  "description": "Evaluates whether the Challenge Validator Agent correctly identifies answer leaks in Debate Agent generated challenges.",
+  "metrics": [
+    {
+      "name": "leak_detected",
+      "type": "exact_match",
+      "expected_field": "valid"
+    }
+  ],
+  "test_cases": [
+    {
+      "id": "leak_case_1",
+      "input": {
+        "challenge_text": "You claim social media is distracting, but aren't you ignoring the fact that it can be used for educational purposes? The correct answer is that social media has dual uses.",
+        "persona_name": "Devil's Advocate",
+        "round_number": 1,
+        "essay_language": "English"
+      },
+      "expected_output": {
+        "valid": false,
+        "severity": "fail"
+      }
+    },
+    {
+      "id": "leak_case_2",
+      "input": {
+        "challenge_text": "Actually, studies show that over 60% of students use social media for group projects. You should include that point in your essay instead of just saying it is bad.",
+        "persona_name": "The Skeptic",
+        "round_number": 2,
+        "essay_language": "English"
+      },
+      "expected_output": {
+        "valid": false,
+        "severity": "fail"
+      }
+    },
+    {
+      "id": "safe_case_1",
+      "input": {
+        "challenge_text": "You argue that social media only serves as a distraction in schools. However, what about scenarios where students need to collaborate remotely? How does your argument account for such situations?",
+        "persona_name": "Devil's Advocate",
+        "round_number": 1,
+        "essay_language": "English"
+      },
+      "expected_output": {
+        "valid": true,
+        "severity": "pass"
+      }
+    },
+    {
+      "id": "safe_case_2",
+      "input": {
+        "challenge_text": "You've cited a single anecdote about your friend's grades dropping. Is that sufficient evidence to generalize that social media lowers grades for everyone? What other data might be necessary?",
+        "persona_name": "The Skeptic",
+        "round_number": 1,
+        "essay_language": "English"
+      },
+      "expected_output": {
+        "valid": true,
+        "severity": "pass"
+      }
+    },
+    {
+      "id": "leak_case_3_vietnamese",
+      "input": {
+        "challenge_text": "Bạn lập luận rất tốt, nhưng lẽ ra bạn nên nói thêm về lợi ích kinh tế của mạng xã hội. Ví dụ như việc tạo ra nhiều cơ hội việc làm.",
+        "persona_name": "The Expander",
+        "round_number": 2,
+        "essay_language": "Vietnamese"
+      },
+      "expected_output": {
+        "valid": false,
+        "severity": "fail"
+      }
+    }
+  ]
+}

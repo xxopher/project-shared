@@ -1,0 +1,87 @@
+{
+  "evalset_name": "debate_quality",
+  "description": "Tests whether Debate Agent produces relevant challenges without revealing correct answers.",
+  "metric": "LLM-as-judge scoring 0-5 on challenge_relevance and answer_withholding",
+  "judge_prompt": "Score the debate challenge below on two dimensions (0-5 each):\n1. challenge_relevance: Does the challenge directly target a weakness in the essay summary provided? 5=directly targets core weakness, 0=irrelevant.\n2. answer_withholding: Does the challenge avoid giving away the correct answer or model argument? 5=no hints at correct answer, 0=directly reveals what the student should say.\nReturn JSON: {\"challenge_relevance\": <0-5>, \"answer_withholding\": <0-5>, \"reasoning\": \"<one sentence>\"}",
+  "pass_threshold": {"challenge_relevance": 3, "answer_withholding": 4},
+  "cases": [
+    {
+      "id": "dq_001",
+      "persona": "Skeptic",
+      "essay_summary": {
+        "main_claim": "Social media causes depression in teenagers.",
+        "supporting_points": ["Increased screen time correlates with lower mood", "Teenagers who use Instagram more report feeling worse about themselves"],
+        "evidence": ["Studies show a link between social media and mental health issues"],
+        "conclusion": "We should limit social media use for people under 18."
+      },
+      "round": 1,
+      "expected_challenge_contains": ["studies", "source", "sample", "which", "how many"],
+      "must_not_contain": ["you should cite", "a good source would be", "try using WHO data", "the correct evidence is"]
+    },
+    {
+      "id": "dq_002",
+      "persona": "DevilsAdvocate",
+      "essay_summary": {
+        "main_claim": "Remote work increases productivity.",
+        "supporting_points": ["Employees report less time commuting", "Survey shows 73% feel more focused at home"],
+        "evidence": ["Stanford study on remote workers"],
+        "conclusion": "Companies should adopt permanent remote work policies."
+      },
+      "round": 1,
+      "expected_challenge_contains": ["consider", "case", "however", "what about", "on the other hand"],
+      "must_not_contain": ["you are wrong", "the correct answer", "productivity actually decreases because", "you should argue"]
+    },
+    {
+      "id": "dq_003",
+      "persona": "Nitpicker",
+      "essay_summary": {
+        "main_claim": "Renewable energy is the solution to climate change.",
+        "supporting_points": ["Solar panels are cheaper than coal", "Wind energy capacity has grown 300% in 10 years"],
+        "evidence": ["IRENA 2022 cost report"],
+        "conclusion": "All countries must transition to 100% renewable energy by 2030."
+      },
+      "round": 2,
+      "expected_challenge_contains": ["therefore", "follows", "how does", "leap", "definition", "consistent"],
+      "must_not_contain": ["the right conclusion is", "you should say", "100% by 2050 is more realistic", "here is a better argument"]
+    },
+    {
+      "id": "dq_004",
+      "persona": "Expander",
+      "essay_summary": {
+        "main_claim": "Four-day work weeks improve employee wellbeing.",
+        "supporting_points": ["Microsoft Japan trial showed 40% productivity boost", "Employees reported less burnout"],
+        "evidence": ["Microsoft Japan 2019 experiment"],
+        "conclusion": "All companies should adopt four-day work weeks."
+      },
+      "round": 1,
+      "expected_challenge_contains": ["assume", "context", "apply to", "what about", "extend"],
+      "must_not_contain": ["works for tech companies", "retail workers need", "the right scope is", "here is where your argument breaks"]
+    },
+    {
+      "id": "dq_005",
+      "persona": "Skeptic",
+      "essay_summary": {
+        "main_claim": "Fast food is the primary cause of obesity in America.",
+        "supporting_points": ["Fast food consumption has doubled since 1980", "Obesity rates have also doubled since 1980"],
+        "evidence": ["CDC obesity statistics", "NPD Group fast food data"],
+        "conclusion": "Taxing fast food will reduce obesity rates."
+      },
+      "round": 2,
+      "expected_challenge_contains": ["correlation", "causation", "other factors", "alternative explanation", "also increased"],
+      "must_not_contain": ["the real cause is", "sedentary lifestyle is more important", "here is a better argument for obesity"]
+    },
+    {
+      "id": "dq_006",
+      "persona": "DevilsAdvocate",
+      "essay_summary": {
+        "main_claim": "Universal basic income would reduce poverty.",
+        "supporting_points": ["Finland pilot showed participants reported less stress", "Direct cash gives recipients autonomy"],
+        "evidence": ["Finland UBI pilot 2018-2019"],
+        "conclusion": "Governments should implement UBI immediately."
+      },
+      "round": 3,
+      "expected_challenge_contains": ["consider", "inflation", "cost", "funded", "what happens if"],
+      "must_not_contain": ["UBI fails because", "the real problem with UBI is", "here is why your argument is wrong", "you should address inflation directly by saying"]
+    }
+  ]
+}

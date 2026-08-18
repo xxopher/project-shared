@@ -1,0 +1,228 @@
+{
+  "evalset_name": "persona_trigger",
+  "description": "Tests whether Persona Selector chooses the right persona given essay weakness patterns.",
+  "metric": "Exact match against expected persona. Pass = selected_personas contains at least one expected persona.",
+  "pass_threshold": 0.75,
+  "cases": [
+    {
+      "id": "pt_001",
+      "essay_summary": {
+        "main_claim": "Video games cause violence in children.",
+        "supporting_points": ["Studies show correlation", "Many violent criminals played video games"],
+        "evidence": ["studies show", "everyone knows"],
+        "conclusion": "Video games should be banned for under-16s."
+      },
+      "expected_personas": ["Skeptic"],
+      "weakness_pattern": "vague_evidence"
+    },
+    {
+      "id": "pt_002",
+      "essay_summary": {
+        "main_claim": "Nuclear energy is too dangerous to use.",
+        "supporting_points": ["Chernobyl was catastrophic", "Fukushima showed risks"],
+        "evidence": ["Chernobyl 1986", "Fukushima 2011"],
+        "conclusion": "All nuclear plants should be shut down."
+      },
+      "expected_personas": ["DevilsAdvocate"],
+      "weakness_pattern": "ignores_counterarguments"
+    },
+    {
+      "id": "pt_003",
+      "essay_summary": {
+        "main_claim": "More education leads to higher income.",
+        "supporting_points": ["College graduates earn more on average", "Skills learned in school are valuable"],
+        "evidence": ["BLS wage data 2022"],
+        "conclusion": "Therefore everyone should go to college."
+      },
+      "expected_personas": ["Nitpicker"],
+      "weakness_pattern": "logical_leap"
+    },
+    {
+      "id": "pt_004",
+      "essay_summary": {
+        "main_claim": "Meditation reduces stress.",
+        "supporting_points": ["Studies on mindfulness show lower cortisol", "Participants in MBSR programs report feeling calmer"],
+        "evidence": ["JAMA Internal Medicine meta-analysis 2014"],
+        "conclusion": "All companies should mandate daily meditation for employees."
+      },
+      "expected_personas": ["Expander"],
+      "weakness_pattern": "narrow_scope"
+    },
+    {
+      "id": "pt_005",
+      "essay_summary": {
+        "main_claim": "Electric cars will solve climate change.",
+        "supporting_points": ["EVs produce zero direct emissions", "Battery technology is improving"],
+        "evidence": ["IEA 2023 report on EV adoption"],
+        "conclusion": "Governments should ban petrol cars by 2030."
+      },
+      "expected_personas": ["Nitpicker", "Expander"],
+      "weakness_pattern": "logical_leap_and_narrow_scope"
+    },
+    {
+      "id": "pt_006",
+      "essay_summary": {
+        "main_claim": "Social media algorithms are addictive by design.",
+        "supporting_points": ["Variable reward schedules are used", "Former Facebook engineers admitted this"],
+        "evidence": ["The Social Dilemma documentary", "Sean Parker 2017 interview"],
+        "conclusion": "Addictive design should be regulated."
+      },
+      "expected_personas": ["Skeptic"],
+      "weakness_pattern": "weak_source_credibility"
+    },
+    {
+      "id": "pt_007",
+      "essay_summary": {
+        "main_claim": "Homework is harmful to student learning.",
+        "supporting_points": ["Students who do less homework sleep more", "Finland doesn't assign much homework and has good results"],
+        "evidence": ["PISA scores Finland", "Sleep research general"],
+        "conclusion": "Schools should eliminate homework entirely."
+      },
+      "expected_personas": ["DevilsAdvocate"],
+      "weakness_pattern": "ignores_counterarguments"
+    },
+    {
+      "id": "pt_008",
+      "essay_summary": {
+        "main_claim": "Raising the minimum wage reduces poverty.",
+        "supporting_points": ["Higher wages mean more money", "Workers can afford basic needs"],
+        "evidence": ["Common sense reasoning only"],
+        "conclusion": "Minimum wage should be doubled immediately."
+      },
+      "expected_personas": ["Skeptic", "DevilsAdvocate"],
+      "weakness_pattern": "vague_evidence_and_ignores_counterarguments"
+    },
+    {
+      "id": "pt_009",
+      "essay_summary": {
+        "main_claim": "Artificial intelligence will take all jobs.",
+        "supporting_points": ["AI can do many tasks humans do", "Automation has replaced workers before"],
+        "evidence": ["McKinsey 2017 automation report"],
+        "conclusion": "We need universal basic income now to prepare."
+      },
+      "expected_personas": ["Nitpicker"],
+      "weakness_pattern": "premise_to_conclusion_gap"
+    },
+    {
+      "id": "pt_010",
+      "essay_summary": {
+        "main_claim": "Organic food is healthier than conventional food.",
+        "supporting_points": ["Fewer pesticides in organic produce", "Organic farming is more sustainable"],
+        "evidence": ["USDA organic standards"],
+        "conclusion": "Everyone should buy organic food."
+      },
+      "expected_personas": ["Expander"],
+      "weakness_pattern": "hidden_assumption_affordability"
+    },
+    {
+      "id": "pt_011",
+      "essay_summary": {
+        "main_claim": "Stricter gun laws reduce gun violence.",
+        "supporting_points": ["Australia reduced gun deaths after 1996 buyback", "Japan has strict laws and low gun deaths"],
+        "evidence": ["Australian gun death statistics", "Japan gun death statistics"],
+        "conclusion": "The US should adopt similar strict gun laws."
+      },
+      "expected_personas": ["Expander"],
+      "weakness_pattern": "cross_cultural_assumption"
+    },
+    {
+      "id": "pt_012",
+      "essay_summary": {
+        "main_claim": "Eating breakfast improves academic performance.",
+        "supporting_points": ["Students who eat breakfast get better grades on average"],
+        "evidence": ["it is widely accepted", "studies suggest"],
+        "conclusion": "Schools should provide free breakfast to all students."
+      },
+      "expected_personas": ["Skeptic"],
+      "weakness_pattern": "vague_evidence"
+    },
+    {
+      "id": "pt_013",
+      "essay_summary": {
+        "main_claim": "Prison is ineffective at reducing crime.",
+        "supporting_points": ["Recidivism rates are high", "Nordic countries use rehabilitation and have lower crime"],
+        "evidence": ["US Bureau of Justice Statistics recidivism report"],
+        "conclusion": "Prisons should be replaced with rehabilitation centers."
+      },
+      "expected_personas": ["Nitpicker"],
+      "weakness_pattern": "correlation_as_causation_and_leap"
+    },
+    {
+      "id": "pt_014",
+      "essay_summary": {
+        "main_claim": "Vegetarian diets are better for the environment.",
+        "supporting_points": ["Livestock farming produces 14.5% of global emissions", "Less land use for plant-based food"],
+        "evidence": ["FAO 2013 report on livestock emissions"],
+        "conclusion": "People should be taxed for eating meat."
+      },
+      "expected_personas": ["DevilsAdvocate"],
+      "weakness_pattern": "ignores_counterarguments_policy_leap"
+    },
+    {
+      "id": "pt_015",
+      "essay_summary": {
+        "main_claim": "Online learning is just as effective as in-person learning.",
+        "supporting_points": ["Students can learn at their own pace", "MIT OpenCourseWare has millions of users"],
+        "evidence": ["MIT OpenCourseWare usage statistics"],
+        "conclusion": "Universities should shift to fully online education."
+      },
+      "expected_personas": ["Expander"],
+      "weakness_pattern": "narrow_evidence_broad_conclusion"
+    },
+    {
+      "id": "pt_016",
+      "essay_summary": {
+        "main_claim": "Standardized tests are biased against low-income students.",
+        "supporting_points": ["Wealthier students score higher on SAT", "Test prep is expensive"],
+        "evidence": ["College Board SAT score distribution by income"],
+        "conclusion": "Standardized tests should be abolished from college admissions."
+      },
+      "expected_personas": ["Nitpicker"],
+      "weakness_pattern": "missing_alternative_explanation"
+    },
+    {
+      "id": "pt_017",
+      "essay_summary": {
+        "main_claim": "Exercise cures depression.",
+        "supporting_points": ["Physical activity releases endorphins", "Gym-goers report feeling better"],
+        "evidence": ["gym-goers self-report", "common knowledge"],
+        "conclusion": "Antidepressants should be replaced with exercise prescriptions."
+      },
+      "expected_personas": ["Skeptic", "DevilsAdvocate"],
+      "weakness_pattern": "vague_evidence_and_counterargument_ignored"
+    },
+    {
+      "id": "pt_018",
+      "essay_summary": {
+        "main_claim": "Immigration increases crime.",
+        "supporting_points": ["Cities with more immigrants have higher crime statistics"],
+        "evidence": ["FBI crime statistics", "Census immigration data"],
+        "conclusion": "Immigration should be reduced to make communities safer."
+      },
+      "expected_personas": ["Nitpicker"],
+      "weakness_pattern": "correlation_without_causation"
+    },
+    {
+      "id": "pt_019",
+      "essay_summary": {
+        "main_claim": "Space exploration is a waste of money.",
+        "supporting_points": ["NASA budget is $24 billion per year", "That money could solve hunger"],
+        "evidence": ["NASA budget 2023"],
+        "conclusion": "Space programs should be defunded."
+      },
+      "expected_personas": ["DevilsAdvocate"],
+      "weakness_pattern": "ignores_spinoff_benefits"
+    },
+    {
+      "id": "pt_020",
+      "essay_summary": {
+        "main_claim": "Social media should be banned for users under 16.",
+        "supporting_points": ["Teen mental health crisis correlates with smartphone adoption", "France passed a law banning social media under 15"],
+        "evidence": ["Jonathan Haidt The Anxious Generation", "French digital majority law 2023"],
+        "conclusion": "All countries should follow France's example."
+      },
+      "expected_personas": ["Expander"],
+      "weakness_pattern": "cross_cultural_assumption_enforcement"
+    }
+  ]
+}
