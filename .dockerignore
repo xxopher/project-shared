@@ -1,0 +1,35 @@
+# Never bake secrets, local state, or bulky dev artifacts into the image.
+ai_module/credentials/
+.env
+token.json
+credentials.json
+service_account.json
+*.pem
+*.key
+critiqai_mode.json
+scorer_config.json
+
+# Virtual envs & caches
+venv/
+env/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# VCS & IDE
+.git/
+.gitignore
+.vscode/
+.idea/
+*.swp
+
+# ADK runtime state
+agents/.adk/
+**/.adk/
+
+# Notebooks & docs not needed at runtime
+.ipynb_checkpoints/
+*.ipynb

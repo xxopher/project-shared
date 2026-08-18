@@ -1,0 +1,54 @@
+{
+  "name": "critiqai",
+  "display_name": "CritiqAI — Critical Thinking Debate System",
+  "description": "Multi-agent system that simulates peer review for student essays. AI personas challenge student arguments without revealing correct answers.",
+  "version": "0.1.0",
+  "root_agent": "agents/orchestrator.py:create_orchestrator",
+  "model": "gemini-2.5-flash-lite",
+  "mcp_servers": {
+    "google-drive": {
+      "transport": "sse",
+      "url": "https://drive.googleapis.com/mcp",
+      "scope": ["https://www.googleapis.com/auth/drive.readonly"],
+      "allowed_folders": ["essay-submissions/"]
+    },
+    "google-sheets": {
+      "transport": "sse",
+      "url": "https://sheets.googleapis.com/mcp",
+      "scope": ["https://www.googleapis.com/auth/spreadsheets"],
+      "allowed_spreadsheet_ids": ["${DEBATE_LOG_SHEET_ID}"]
+    },
+    "gmail": {
+      "transport": "sse",
+      "url": "https://gmail.googleapis.com/mcp",
+      "scope": ["https://www.googleapis.com/auth/gmail.compose"],
+      "allowed_tools": ["create_draft"]
+    },
+    "argument-scorer": {
+      "_comment": "Local dev: transport=stdio. GCP production: set SCORER_URL env var (Cloud Run URL) and use transport=streamable-http",
+      "transport": "streamable-http",
+      "url": "${SCORER_URL}/mcp",
+      "allowed_tools": ["score_argument", "score_dimension", "get_rubric_info"]
+    }
+  },
+  "skills": [
+    "skills/critical-thinking-rubric/SKILL.md",
+    "skills/persona-selector/SKILL.md",
+    "skills/answer-leak-patterns/SKILL.md"
+  ],
+  "evals": [
+    "evals/debate_quality.evalset.json",
+    "evals/persona_trigger.evalset.json",
+    "evals/leak_detection.evalset.json"
+  ],
+  "session_state_schema": {
+    "student_name": "str",
+    "essay_url": "str",
+    "essay_summary": "dict",
+    "active_personas": "list[str]",
+    "debate_rounds": "list[dict]",
+    "current_round": "int",
+    "analytics": "dict",
+    "report_draft_id": "str"
+  }
+}
